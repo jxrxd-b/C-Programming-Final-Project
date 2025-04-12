@@ -1,0 +1,29 @@
+
+# Ignore Visual Studio files
+.vs/
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
+ipch/
+*.pdb
+*.obj
+*.exe
+*.log
+*.suo
+*.cache
+*.ilk
+*.ncb
+*.aps
+*.sdf
+*.opensdf
+*.tlog
+*.log
+*.user
+*.ipch
+*.dbmdl
+
+# Ignore build directories
+Debug/
+Release/
+x64/
+x86/
