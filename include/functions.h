@@ -2,3 +2,5 @@
 #define FUNCTIONS_H
 
 #include <stdbool.h>
+
+#endif
