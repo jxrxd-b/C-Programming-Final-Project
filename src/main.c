@@ -1,3 +1,7 @@
-#include <stdio.h>     // Standard I/O functions like printf, scanf
-#include <stdbool.h>   // For boolean types (true/false)
+#include <stdio.h>
+#include <stdbool.h>
 #include "../include/functions.h"
+
+int main() {
+
+}
