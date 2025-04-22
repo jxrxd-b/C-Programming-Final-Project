@@ -6,16 +6,22 @@
 
 
 typedef struct Contact {
-	char* firstName[50];
-	char* lastName[50];
-	char* phoneNum[15];
-	int age;
+	char firstName[50];
+	char lastName[50];
 
+	char phoneNum[15];
+	//do you like this as a string or should we make it an int?
+	
+	char city[50];
+	char state[50];
+	char country[50];
+	char adress[100];
+	int	zipCode;
 
-	//test test
-	// Team 3 Final Project
+	char email[50];
 
-
+	char notes[100];   // 100 character limit (if too comolex, we'll get rid of this)
+	char birthday[11]; // YYYY-MM-DD
 
 }Contact;
 
