@@ -5,15 +5,23 @@
 #include <string.h>
 
 
+struct Contact {
+	char name[50];
+	char phoneNum[15];
+	int age;
+};
 
-typedef struct Contact_Info_Struct {
+struct Phonebook {
+	struct Contact contacts[100];
+	int count;
+};
 
-	char firstName[50];
-	char lastName;
-	char middleName;
-	char streetAdress;
+addContact(char* name, char* phoneNum);
 
+displayContacts();
 
-}ContactInfo;
+deleteContact(char* phoneNum);
+
+searchContacts(char* name, char* phoneNum);
 
 #endif
