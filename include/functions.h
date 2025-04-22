@@ -6,13 +6,20 @@
 
 
 typedef struct Contact {
-	char name[50];
-	char phoneNum[15];
+	char* firstName[50];
+	char* lastName[50];
+	char* phoneNum[15];
 	int age;
+
+
+	//test test
+
+
+
 }Contact;
 
 typedef struct Phonebook {
-	struct Contact contacts[100];
+	Contact contacts[100];
 	int count;
 }PhoneBook;
 
