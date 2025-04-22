@@ -2,5 +2,3 @@
 #include <stdbool.h>   
 #include "../include/functions.h"
 
-	
-}
