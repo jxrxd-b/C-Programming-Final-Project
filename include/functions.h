@@ -6,9 +6,9 @@
 
 
 typedef struct Contact {
-	char* firstName[50];
-	char* lastName[50];
-	char* phoneNum[15];
+	char firstName[50];
+	char lastName[50];
+	char phoneNum[15];
 	int age;
 
 
@@ -24,12 +24,19 @@ typedef struct Phonebook {
 	int count;
 }PhoneBook;
 
-addContact(char* name, char* phoneNum);
+Contact addContact();
 
-displayContacts();
+void displayContacts(PhoneBook *pb);
 
 deleteContact(char* phoneNum);
 
 searchContacts(char* name, char* phoneNum);
+
+int getPhonebookMenu(int choice);
+
+void setPhonebookMenu(int choice);
+
+
+
 
 #endif
