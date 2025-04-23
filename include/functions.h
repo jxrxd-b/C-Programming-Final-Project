@@ -40,7 +40,7 @@ deleteContact(char* phoneNum);
 
 searchContacts(char* name, char* phoneNum);
 
-int getPhonebookMenu(int choice);
+int getPhonebookMenuChoice();
 
 void setPhonebookMenu(int choice);
 

@@ -43,7 +43,7 @@ void displayContacts(PhoneBook* pb) {
 	}
 }
 
-int getPhonebookMenu(int choice) {
+int getPhonebookMenuChoice() {
 	int choice;
 	printf("Phonebook Menu:\n");
 	printf("1. Add Contact\n");
