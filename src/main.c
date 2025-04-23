@@ -3,16 +3,15 @@
 #include <string.h>
 #include "../include/functions.h"
 
-
-
-
 int main() {
-	char menuChoice;
-	
-	printf("Wlecome to the phone book!");
+	char choice;
 
-	menuChoice = getPhonebookMenuChoice();
-	printf("%c", menuChoice);
+	printf("Welcome to the phone book!\n\n");
+
+	choice = getPhonebookMenuChoice();
+
+	void setPhonebookMenu(choice);
+
+	printf("%c", choice);
 	//test print
-
 }
