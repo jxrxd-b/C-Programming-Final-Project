@@ -50,7 +50,7 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook);
 
 
 
-Contact addContact();
+Contact addContact(PhoneBook* phonebook);
 
 void deleteContact(PhoneBook *pb, char* phoneNum);
 
