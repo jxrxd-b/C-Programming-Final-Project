@@ -32,20 +32,32 @@ int getPhonebookMenuChoice() {
 * Processes:		uses Choice to run function options, that add, display, delete, and search contacts 
 * Return Value: 	Choice
 */
-void setPhonebookMenu(int choice) {
-	PhoneBook phoneBook; 
-	phoneBook.count = 0;
+void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 	
 	switch (choice) {
 	case 1:
-		addContact();
+		if (phonebook->count < 100) {
+			phonebook->contacts[phonebook->count++] = addContact();
+		}
+		else {
+			printf("Phonebook is full.\n");
+		}
 		break;
 	case 2:
-		displayContacts(&phoneBook);
+		displayContacts(phonebook);
 		break;
-	case 3:
-		// Delete contact
+	case 3: {
+		char phoneNum[15];
+		printf("Enter the phone number of the contact to delete: ");
+		if (scanf_s("%14s", phoneNum, (unsigned)sizeof(phoneNum)) != 1) {
+			fprintf(stderr, "Problems processing your selection.\n");
+			while (getchar() != '\n');
+			break;
+		}
+		while (getchar() != '\n');
+		deleteContact(phonebook, phoneNum);
 		break;
+	}
 	case 4:
 		// Search contacts
 		break;
@@ -63,19 +75,19 @@ Contact addContact() {
 	Contact contact;
 
 	printf("Enter first name: ");
-	if (scanf_s("%49s", contact.firstName) != 1) {
+	if (scanf_s("%49s", contact.firstName, (unsigned)sizeof(contact.firstName)) != 1) {
 		fprintf(stderr, "Problems processing your selection.\n");
 		contact.firstName[0] = '\0';
 	};
 
 	printf("Enter last name: ");
-	if (scanf_s("%49s", &contact.lastName) != 1) {
+	if (scanf_s("%49s", contact.lastName, (unsigned)sizeof(contact.lastName)) != 1) {
 		fprintf(stderr, "Problems processing your selection.\n");
 		contact.lastName[0] = '\0';
 	};
 
 	printf("Enter phone number: ");
-	if (scanf_s("%14s", &contact.phoneNum) != 1) {
+	if (scanf_s("%14s", contact.phoneNum, (unsigned)sizeof(contact.phoneNum)) != 1) {
 		fprintf(stderr, "Problems processing your selection.\n");
 		contact.phoneNum[0] = '\0';
 	};
@@ -97,5 +109,18 @@ void displayContacts(PhoneBook* pb) {
 		printf("Last Name: %s\n", pb->contacts[i].lastName);
 		printf("Phone Number: %s\n", pb->contacts[i].phoneNum);
 		printf("Age: %d\n", pb->contacts[i].age);
+	}
+}
+
+void deleteContact(PhoneBook* pb, char* phoneNum) {
+	for (int i = 0; i < pb->count; i++) {
+		if (strcmp(pb->contacts[i].phoneNum, phoneNum) == 0) {
+			for (int j = i; j < pb->count - 1; j++) {
+				pb->contacts[j] = pb->contacts[j + 1];
+			}
+			pb->count--;
+			printf("Contact with phone number %s deleted.\n", phoneNum);
+			return;
+		}
 	}
 }
