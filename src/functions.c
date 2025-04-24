@@ -55,7 +55,7 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 		deleteContact(phonebook, phoneNum);
 		break;
 	}
-	case 4:
+	case 4: {
 		char searchTerm[50];
 		printf("Enter the first name to search contacts: ");
 		if (scanf_s("%49s", searchTerm, (unsigned)sizeof(searchTerm)) != 1) {
@@ -64,7 +64,7 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 		}
 		searchContacts(phonebook, searchTerm);
 		break;
-		break;
+	}
 	case 5:
 		editContact(phonebook);
 		break;

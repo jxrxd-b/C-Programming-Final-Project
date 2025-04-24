@@ -24,11 +24,11 @@ int getPhonebookMenuChoice();
 
 void setPhonebookMenu(int choice, PhoneBook *phonebook);
 
-Contact addContact();
+Contact addContact(PhoneBook* phonebook);
 
 void deleteContact(PhoneBook *pb, char* phoneNum);
 
-void searchContacts(char* name, char* phoneNum);
+void searchContacts(PhoneBook* phonebook, char* searchTerm);
 
 void displayContacts(PhoneBook* pb);
 
