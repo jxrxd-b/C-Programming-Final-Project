@@ -74,30 +74,61 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 Contact addContact() {
 	Contact contact;
 
-	printf("Enter first name: ");
-	if (scanf_s("%49s", contact.firstName, (unsigned)sizeof(contact.firstName)) != 1) {
-		fprintf(stderr, "Problems processing your selection.\n");
-		contact.firstName[0] = '\0';
-	};
+	Contact addContact(PhoneBook * phonebook) {
 
-	printf("Enter last name: ");
-	if (scanf_s("%49s", contact.lastName, (unsigned)sizeof(contact.lastName)) != 1) {
-		fprintf(stderr, "Problems processing your selection.\n");
-		contact.lastName[0] = '\0';
-	};
+		if (phonebook == NULL) {
+			fprintf(stderr, "Phonebook is not initialized.\n");
+			exit(EXIT_FAILURE);
+		}
+		if (phonebook->count >= 100) {
+			fprintf(stderr, "Phonebook is full. Cannot add more contacts.\n");
+			Contact emptyContact = { 0 };
+			return emptyContact;
+		}
 
-	printf("Enter phone number: ");
-	if (scanf_s("%14s", contact.phoneNum, (unsigned)sizeof(contact.phoneNum)) != 1) {
-		fprintf(stderr, "Problems processing your selection.\n");
-		contact.phoneNum[0] = '\0';
-	};
+		Contact contact;
 
-	printf("Enter age: ");
-	if (scanf_s("%d", &contact.age) != 1) {
-		fprintf(stderr, "Problems processing your selection.\n");
-		contact.age = -1;
-		while (getchar() != '\n');
-	};
+		// First name
+		printf("Enter first name: ");
+		if (scanf_s("%49s", contact.firstName, (unsigned)_countof(contact.firstName)) != 1) {
+			fprintf(stderr, "Error reading first name.\n");
+			contact.firstName[0] = '\0';
+		}
+
+		// Last name
+		printf("Enter last name: ");
+		if (scanf_s("%49s", contact.lastName, (unsigned)_countof(contact.lastName)) != 1) {
+			fprintf(stderr, "Error reading last name.\n");
+			contact.lastName[0] = '\0';
+		}
+
+		// Phone number
+		printf("Enter phone number: ");
+		if (scanf_s("%14s", contact.phoneNum, (unsigned)_countof(contact.phoneNum)) != 1) {
+			fprintf(stderr, "Error reading phone number.\n");
+			contact.phoneNum[0] = '\0';
+		}
+
+		// Age
+		printf("Enter age: ");
+		if (scanf_s("%d", &contact.age) != 1) {
+			fprintf(stderr, "Error reading age.\n");
+			contact.age = 0;
+		}
+
+		// Add contact to phonebook
+		phonebook->contacts[phonebook->count] = contact;
+		phonebook->count++;
+
+		// Output the entered information back to the user
+		printf("\nNew Contact!\n");
+		printf("First Name: %s\n", contact.firstName);
+		printf("Last Name: %s\n", contact.lastName);
+		printf("Phone Number: %s\n", contact.phoneNum);
+		printf("Age: %d\n", contact.age);
+
+		return contact;
+	}
 
 	return contact;
 }
