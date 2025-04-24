@@ -45,14 +45,14 @@ int getPhonebookMenuChoice();
 * Return Value: 	void
 */
 
-void setPhonebookMenu(int choice);
+void setPhonebookMenu(int choice, PhoneBook *phonebook);
 
 
 
 
 Contact addContact();
 
-deleteContact(char* phoneNum);
+void deleteContact(PhoneBook *pb, char* phoneNum);
 
 searchContacts(char* name, char* phoneNum);
 
