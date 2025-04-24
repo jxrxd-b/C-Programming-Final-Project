@@ -123,12 +123,24 @@ Contact addContact(PhoneBook * phonebook) {
 }
 
 void displayContacts(PhoneBook* pb) {
+	if (pb->count == 0) {
+		printf("No contacts to display.\n");
+		return;
+	}
+	printf("Displaying contacts:\n");
+
+	Contact temp;
+	for (int i = 0; i < pb->count - 1; i++) {
+		for (int j = i + 1; j < pb->count; j++) {
+			if (strcmp(pb->contacts[i].lastName, pb->contacts[j].lastName) > 0) {
+				temp = pb->contacts[i];
+				pb->contacts[i] = pb->contacts[j];
+				pb->contacts[j] = temp;
+			}
+		}
+	}
 	for (int i = 0; i < pb->count; i++) {
-		printf("Contact %d:\n", i + 1);
-		printf("First Name: %s\n", pb->contacts[i].firstName);
-		printf("Last Name: %s\n", pb->contacts[i].lastName);
-		printf("Phone Number: %s\n", pb->contacts[i].phoneNum);
-		printf("Age: %d\n", pb->contacts[i].age);
+		printf("Name: %s %s, Phone: %s, Age: %d\n", pb->contacts[i].firstName, pb->contacts[i].lastName, pb->contacts[i].phoneNum, pb->contacts[i].age);
 	}
 }
 
