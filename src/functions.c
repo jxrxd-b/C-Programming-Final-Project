@@ -17,7 +17,8 @@ int getPhonebookMenuChoice() {
 	printf("2. Display Contacts\n");
 	printf("3. Delete Contact\n");
 	printf("4. Search Contacts\n");
-	printf("5. Exit\n");
+	printf("5. Edit contact\n");
+	printf("6. Exit\n");
 	printf("Enter your choice: ");
 	if (scanf_s("%d", &choice) != 1) {
 		fprintf(stderr, "Problems processing your selection.\n");
@@ -55,9 +56,19 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 		break;
 	}
 	case 4:
-		// Search contacts
+		char searchTerm[50];
+		printf("Enter the first name to search contacts: ");
+		if (scanf_s("%49s", searchTerm, (unsigned)sizeof(searchTerm)) != 1) {
+			fprintf(stderr, "Error reading search term.\n");
+			break;
+		}
+		searchContacts(phonebook, searchTerm);
+		break;
 		break;
 	case 5:
+		editContact(phonebook);
+		break;
+	case 6:
 		printf("Exiting...\n");
 		break;
 	default:
@@ -65,8 +76,36 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 	}
 }
 
+/*
+* Name:				searchContacts()
+* Parameters:		phonebook, searchTerm                 
+* Processes:		Searches for contacts in the phonebook by first name
+* Return Value: 	none
+*/
+void searchContacts(PhoneBook* phonebook, char* searchTerm) {
+	bool found = false;
+	for (int i = 0; i < phonebook->count; i++) {
+		if (strstr(phonebook->contacts[i].firstName, searchTerm) != NULL) {
+			printf("\nContact %d:\n", i + 1);
+			printf("First Name: %s\n", phonebook->contacts[i].firstName);
+			printf("Last Name: %s\n", phonebook->contacts[i].lastName);
+			printf("Phone Number: %s\n", phonebook->contacts[i].phoneNum);
+			printf("Age: %d\n", phonebook->contacts[i].age);
+			printf("----------------------------------------\n");
+			found = true;
+		}
+	}
+	if (!found) {
+		printf("\nNo contacts found matching the input.\n");
+	}
+}
 
-
+/*
+* Name:				addContact()
+* Parameters:		phonebook
+* Processes:		Adds a new contact to the phonebook
+* Return Value: 	Contact
+*/
 Contact addContact(PhoneBook *phonebook) {
 
 		if (phonebook == NULL) {
@@ -81,7 +120,7 @@ Contact addContact(PhoneBook *phonebook) {
 		Contact contact;
 
 		// First name
-		printf("Enter first name: ");
+		printf("\n\n\nEnter first name: ");
 		if (scanf_s("%49s", contact.firstName, (unsigned)_countof(contact.firstName)) != 1) {
 			fprintf(stderr, "Error reading first name.\n");
 			contact.firstName[0] = '\0';
@@ -113,46 +152,111 @@ Contact addContact(PhoneBook *phonebook) {
 		phonebook->count++;
 
 		// Output the entered information back to the user
-		printf("\nNew Contact!\n");
+		printf("\nNew Contact!\n\n");
 		printf("First Name: %s\n", contact.firstName);
 		printf("Last Name: %s\n", contact.lastName);
 		printf("Phone Number: %s\n", contact.phoneNum);
-		printf("Age: %d\n", contact.age);
+		printf("Age: %d\n\n\n\n\n\n", contact.age);
 
 		return contact;
 }
 
-void displayContacts(PhoneBook* pb) {
-	if (pb->count == 0) {
-		printf("No contacts to display.\n");
-		return;
-	}
-	printf("Displaying contacts:\n");
-
-	Contact temp;
-	for (int i = 0; i < pb->count - 1; i++) {
-		for (int j = i + 1; j < pb->count; j++) {
-			if (strcmp(pb->contacts[i].lastName, pb->contacts[j].lastName) > 0) {
-				temp = pb->contacts[i];
-				pb->contacts[i] = pb->contacts[j];
-				pb->contacts[j] = temp;
-			}
-		}
-	}
-	for (int i = 0; i < pb->count; i++) {
-		printf("Name: %s %s, Phone: %s, Age: %d\n", pb->contacts[i].firstName, pb->contacts[i].lastName, pb->contacts[i].phoneNum, pb->contacts[i].age);
+/*
+* Name:				displayContacts()
+* Parameters:		phonebook
+* Processes:		Displays all contacts in the phonebook
+* Return Value: 	none
+*/
+void displayContacts(PhoneBook* phonebook) {
+	for (int i = 0; i < phonebook->count; i++) {
+		printf("\n\n\nContact %d:\n", i + 1);
+		printf("First Name: %s\n", phonebook->contacts[i].firstName);
+		printf("Last Name: %s\n", phonebook->contacts[i].lastName);
+		printf("Phone Number: %s\n", phonebook->contacts[i].phoneNum);
+		printf("Age: %d\n\n\n\n\n", phonebook->contacts[i].age);
 	}
 }
 
-void deleteContact(PhoneBook* pb, char* phoneNum) {
-	for (int i = 0; i < pb->count; i++) {
-		if (strcmp(pb->contacts[i].phoneNum, phoneNum) == 0) {
-			for (int j = i; j < pb->count - 1; j++) {
-				pb->contacts[j] = pb->contacts[j + 1];
+/*
+* Name:				deleteContact()
+* Parameters:		phonebook, phonNum
+* Processes:		Deletes a contact from the phonebook based on phone number.
+* Return Value: 	none
+*/
+void deleteContact(PhoneBook* phonebook, char* phoneNum) {
+	for (int i = 0; i < phonebook->count; i++) {
+		if (strcmp(phonebook->contacts[i].phoneNum, phoneNum) == 0) {
+			for (int j = i; j < phonebook->count - 1; j++) {
+				phonebook->contacts[j] = phonebook->contacts[j + 1];
 			}
-			pb->count--;
-			printf("Contact with phone number %s deleted.\n", phoneNum);
+			phonebook->count--;
+			printf("\n\nContact with phone number %s deleted.\n\n\n", phoneNum);
 			return;
 		}
 	}
+}
+
+/*
+* Name:				editContact()
+* Parameters:		phonebook
+* Processes:		Allows the user to edit a contact's details by searching for contact using phone number.
+* Return Value: 	none
+*/
+void editContact(PhoneBook* phonebook) {
+	char phoneNum[15];
+	printf("Enter the phone number of the contact to edit: ");
+	if (scanf_s("%14s", phoneNum, (unsigned)sizeof(phoneNum)) != 1) {
+		fprintf(stderr, "Error reading phone number.\n");
+		return;
+	}
+
+	for (int i = 0; i < phonebook->count; i++) {
+		if (strcmp(phonebook->contacts[i].phoneNum, phoneNum) == 0) {
+			printf("\nContact found!\n\n");
+			printf("First Name: %s\n", phonebook->contacts[i].firstName);
+			printf("Last Name: %s\n", phonebook->contacts[i].lastName);
+			printf("Phone Number: %s\n", phonebook->contacts[i].phoneNum);
+			printf("Age: %d\n\n", phonebook->contacts[i].age);
+
+			printf("\nInput what you would like to change (first name, last name, phone number, age): ");
+			char field[20];
+			if (scanf_s("%19s", field, (unsigned)sizeof(field)) != 1) {
+				fprintf(stderr, "Error reading field.\n");
+				return;
+			}
+
+			if (strcmp(field, "first name") == 0) {
+				printf("Enter new first name: ");
+				if (scanf_s("%49s", phonebook->contacts[i].firstName, (unsigned)sizeof(phonebook->contacts[i].firstName)) != 1) {
+					fprintf(stderr, "Error reading first name.\n");
+				}
+			}
+			else if (strcmp(field, "last name") == 0) {
+				printf("Enter new last name: ");
+				if (scanf_s("%49s", phonebook->contacts[i].lastName, (unsigned)sizeof(phonebook->contacts[i].lastName)) != 1) {
+					fprintf(stderr, "Error reading last name.\n");
+				}
+			}
+			else if (strcmp(field, "phone number") == 0) {
+				printf("Enter new phone number: ");
+				if (scanf_s("%14s", phonebook->contacts[i].phoneNum, (unsigned)sizeof(phonebook->contacts[i].phoneNum)) != 1) {
+					fprintf(stderr, "Error reading phone number.\n");
+				}
+			}
+			else if (strcmp(field, "age") == 0) {
+				printf("Enter new age: ");
+				if (scanf_s("%d", &phonebook->contacts[i].age) != 1) {
+					fprintf(stderr, "Error reading age.\n");
+				}
+			}
+			else {
+				printf("Invalid input.\n");
+			}
+
+			printf("\nContact updated!\n");
+			return;
+		}
+	}
+
+	printf("\nPhone number not found.\n");
 }
