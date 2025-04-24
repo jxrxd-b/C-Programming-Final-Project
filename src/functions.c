@@ -1,4 +1,5 @@
 #include <stdio.h>     
+#include <stdlib.h>
 #include <stdbool.h>   
 #include "../include/functions.h"
 
@@ -36,12 +37,7 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 	
 	switch (choice) {
 	case 1:
-		if (phonebook->count < 100) {
-			phonebook->contacts[phonebook->count++] = addContact();
-		}
-		else {
-			printf("Phonebook is full.\n");
-		}
+		addContact(phonebook);
 		break;
 	case 2:
 		displayContacts(phonebook);
@@ -71,14 +67,10 @@ void setPhonebookMenu(int choice, PhoneBook *phonebook) {
 
 
 
-Contact addContact() {
-	Contact contact;
-
-	Contact addContact(PhoneBook * phonebook) {
+Contact addContact(PhoneBook * phonebook) {
 
 		if (phonebook == NULL) {
 			fprintf(stderr, "Phonebook is not initialized.\n");
-			exit(EXIT_FAILURE);
 		}
 		if (phonebook->count >= 100) {
 			fprintf(stderr, "Phonebook is full. Cannot add more contacts.\n");
@@ -128,9 +120,6 @@ Contact addContact() {
 		printf("Age: %d\n", contact.age);
 
 		return contact;
-	}
-
-	return contact;
 }
 
 void displayContacts(PhoneBook* pb) {
