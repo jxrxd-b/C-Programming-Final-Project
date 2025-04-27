@@ -4,20 +4,20 @@
 #include <string.h>
 #include "../include/functions.h"
 
-
 /*
 * Name:				main()
 * Parameters:		none
-* Processes:		runs the phonebook program
+* Processes:		runs the address book program
 * Return Value: 	0
 */
 int main() {
-    PhoneBook phonebook;
-    phonebook.count = 0;
+    AddressBook addressbook;
+    addressbook.count = 0;
     int choice;
     do {
-        choice = getPhonebookMenuChoice();
-        setPhonebookMenu(choice, &phonebook);
+        choice = getAddressBookMenuChoice();
+        setAddressBookMenu(choice, &addressbook);
     } while (choice != 6);
     return 0;
 }
+

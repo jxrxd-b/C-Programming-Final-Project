@@ -5,33 +5,33 @@
 #include <string.h>
 
 typedef struct Contact {
-	char firstName[50];
-	char lastName[50];
-	int age;
-	char phoneNum[15];
-
-
+    char firstName[50];
+    char lastName[50];
+    int age;
+    char phoneNum[15];
+    char streetAddress[100];
+    char city[50];
+    char state[50];
 } Contact;
 
-typedef struct Phonebook {
-	Contact contacts[100];
-	int count;
-} PhoneBook;
+typedef struct AddressBook {
+    Contact contacts[100];
+    int count;
+} AddressBook;
 
+int getAddressBookMenuChoice();
 
+void setAddressBookMenu(int choice, AddressBook* addressbook);
 
-int getPhonebookMenuChoice();
+Contact addContact(AddressBook* addressbook);
 
-void setPhonebookMenu(int choice, PhoneBook *phonebook);
+void deleteContact(AddressBook* addressbook, char* phoneNum);
 
-Contact addContact(PhoneBook* phonebook);
+void searchContacts(AddressBook* addressbook, char* searchTerm);
 
-void deleteContact(PhoneBook *pb, char* phoneNum);
+void displayContacts(AddressBook* addressbook);
 
-void searchContacts(PhoneBook* phonebook, char* searchTerm);
-
-void displayContacts(PhoneBook* pb);
-
-void editContact(PhoneBook* phonebook);
+void editContact(AddressBook* addressbook);
 
 #endif
+
